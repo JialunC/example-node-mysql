@@ -24,7 +24,7 @@ app.post('/addtask', async (req, res) => {
     const payload = req.body
     const result = await query(
         connection,
-        `INSERT INTO tasks VALUES (${payload['id']}, '${payload['name']}', '${payload['status']}')`
+        `INSERT INTO tasks VALUES (${payload['id']}, '${payload['task']}', '${payload['status']}')`
     )
     res.send(result)
 })
