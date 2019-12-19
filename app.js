@@ -8,6 +8,7 @@ app.use(cors());
 
 const webport = 5000;
 app.get('/favicon.ico', (req, res) => res.status(204))
+
 app.get('/', async (req, res) => {
     const results = await query(connection, 'SELECT * FROM tasks').catch(console.log);
     res.json(results);
@@ -19,12 +20,33 @@ app.get('/:id', async (req, res) => {
     res.send(results);
 });
 
-app.post('/add', async (req, res) => {
+app.post('/addtask', async (req, res) => {
     const payload = req.body
-    console.log(payload)
-    const results = await query(connection, `INSERT INTO tasks VALUES (${payload['id']}, '${payload['name']}', '${payload['status']}')`).catch(console.log);
-    res.send(results);
-});
+    const result = await query(
+        connection,
+        `INSERT INTO tasks VALUES (${payload['id']}, '${payload['name']}', '${payload['status']}')`
+    )
+    res.send(result)
+})
+
+app.put('/:id', async (req, res) => {
+    const {id} = req.params
+    const payload = req.body
+    const result = await query(
+        connection,
+        `UPDATE tasks SET task = '${payload['task']}' WHERE ID = ${id}`
+    )
+    res.send(result)
+})
+
+app.delete('/:id', async (req, res) => {
+    const {id} = req.params
+    const result = await query(
+        connection,
+        `DELETE FROM tasks WHERE ID = ${id}`
+    )
+    res.send(result)
+})
 
 app.listen(webport, () => console.log(`Example app listening on port ${webport}!`));
 
