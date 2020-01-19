@@ -1,4 +1,4 @@
-module.exports = async (conn, q, params) => new Promise(
+module.exports = async (conn, q) => new Promise(
   (resolve, reject) => {
     const handler = (error, result) => {
       if (error) {
@@ -7,6 +7,6 @@ module.exports = async (conn, q, params) => new Promise(
       }
       resolve(result)
     }
-    conn.query(q, params, handler);
+    conn.query(q, handler);
   }
 );
