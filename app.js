@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-const webport = 5000;
+const webport = process.env.PORT || 5000;
 app.get('/favicon.ico', (req, res) => res.status(204))
 
 app.get('/', async (req, res) => {
